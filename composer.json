@@ -1,0 +1,43 @@
+{
+    "name": "aplr/laravel-passport-grant-facebook",
+    "description": "Facebook Grant for Laravel Passport.",
+    "keywords": ["laravel", "facebook", "passport", "oauth"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/aplr/laravel-passport-grant-facebook/issues",
+        "source": "https://github.com/aplr/laravel-passport-grant-facebook"
+    },
+    "authors": [
+        {
+            "name": "Andreas Pfurtscheller",
+            "email": "hello@aplr.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "illuminate/support": "5.3.x|5.4.x|5.5.x",
+        "laravel/passport": "^3.0|^4.0",
+        "aplr/laravel-facebook" : "~0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0",
+        "mockery/mockery": "~0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aplr\\LaravelPassportFacebook\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aplr\\LaravelPassportFacebook\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
