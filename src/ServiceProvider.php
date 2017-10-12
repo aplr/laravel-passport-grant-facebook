@@ -23,12 +23,7 @@ use Aplr\LaravelPassportFacebook\FacebookUserRepository;
 
 class ServiceProvider extends LaravelServiceProvider {
         
-    public function register()
-    {
-        $this->registerFacebookGrant();
-    }
-    
-    protected function registerFacebookGrant()
+    public function boot()
     {
         $this->app->make(AuthorizationServer::class)->enableGrantType(
             $this->makeFacebookGrant(), Passport::tokensExpireIn()
