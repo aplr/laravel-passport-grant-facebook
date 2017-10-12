@@ -13,7 +13,6 @@
 namespace Aplr\LaravelPassportFacebook;
 
 use RuntimeException;
-use Facebook\Facebook;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 
@@ -28,7 +27,7 @@ class FacebookUserRepository implements UserRepositoryInterface {
     {
         $provider = config('auth.guards.api.provider');
         
-        if (is_null($model = config('auth.providers.'.$provider.'.model'))) {
+        if (is_null($model = config("auth.providers.{$provider}.model"))) {
             throw new RuntimeException('Unable to determine authentication model from configuration.');
         }
         

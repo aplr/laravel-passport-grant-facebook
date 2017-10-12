@@ -14,7 +14,7 @@ namespace Aplr\LaravelPassportFacebook;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-use Facebook\Facebook;
+use Aplr\LaravelFacebook\Facade as Facebook;
 use League\OAuth2\Server\RequestEvent;
 use League\OAuth2\Server\Grant\AbstractGrant;
 use League\OAuth2\Server\Entities\UserEntityInterface;
@@ -31,14 +31,12 @@ class FacebookGrant extends AbstractGrant {
      * @param RefreshTokenRepositoryInterface $refreshTokenRepository
      */
     public function __construct(
-        Facebook $facebook,
         UserRepositoryInterface $userRepository,
         RefreshTokenRepositoryInterface $refreshTokenRepository
     ) {
         $this->setUserRepository($userRepository);
         $this->setRefreshTokenRepository($refreshTokenRepository);
         $this->refreshTokenTTL = new \DateInterval('P1M');
-        $this->facebook = $facebook;
     }
     
     public function respondToAccessTokenRequest(
@@ -74,7 +72,7 @@ class FacebookGrant extends AbstractGrant {
         
         try
         {
-            $fbResponse = $this->facebook->get('/me?fields=id', $token);
+            $fbResponse = Facebook::get('/me?fields=id', $token);
             $fbUser = $fbResponse->getGraphUser();
         }
         catch (\Exception $e)
