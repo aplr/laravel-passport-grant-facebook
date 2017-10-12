@@ -21,12 +21,6 @@ use Laravel\Passport\Bridge\User;
 
 class FacebookUserRepository implements UserRepositoryInterface {
     
-    protected $facebook;
-    
-    public function __construct(Facebook $facebook) {
-        $this->facebook = $facebook;
-    }
-    
     /**
      * {@inheritdoc}
      */

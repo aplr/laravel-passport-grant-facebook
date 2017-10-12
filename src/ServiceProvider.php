@@ -12,13 +12,14 @@
 
 namespace Aplr\LaravelPassportFacebook;
 
-use Aplr\LaravelFacebook\Facade as Facebook;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
-
 
 use Laravel\Passport\Passport;
 use League\OAuth2\Server\AuthorizationServer;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
+
+use Aplr\LaravelPassportFacebook\FacebookGrant;
+use Aplr\LaravelPassportFacebook\FacebookUserRepository;
 
 class ServiceProvider extends LaravelServiceProvider {
         
