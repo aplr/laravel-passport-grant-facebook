@@ -22,6 +22,8 @@ use Aplr\LaravelPassportFacebook\FacebookGrant;
 use Aplr\LaravelPassportFacebook\FacebookUserRepository;
 
 class ServiceProvider extends LaravelServiceProvider {
+
+    protected $defer = true;
         
     public function boot()
     {
@@ -40,6 +42,11 @@ class ServiceProvider extends LaravelServiceProvider {
         $grant->setRefreshTokenTTL(Passport::refreshTokensExpireIn());
         
         return $grant;
+    }
+
+    public function provides()
+    {
+        return [ AuthorizationServer::class ];
     }
     
 }
