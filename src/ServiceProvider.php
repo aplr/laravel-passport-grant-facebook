@@ -22,11 +22,22 @@ use Aplr\LaravelPassportFacebook\FacebookGrant;
 use Aplr\LaravelPassportFacebook\FacebookUserRepository;
 
 class ServiceProvider extends LaravelServiceProvider {
-
-    protected $defer = true;
         
     public function boot()
     {
+        // get key paths
+        list($publicKey, $privateKey) = [
+            Passport::keyPath('oauth-public.key'),
+            Passport::keyPath('oauth-private.key'),
+        ];
+
+        // exit early, as the keys are not set yet.
+        // thereby, passport is not ready to be used yet,
+        // as it will just exit with an exception.
+        if (! (file_exists($publicKey) || file_exists($privateKey)) ) {
+            return;
+        }
+
         $this->app->make(AuthorizationServer::class)->enableGrantType(
             $this->makeFacebookGrant(), Passport::tokensExpireIn()
         );
@@ -42,11 +53,6 @@ class ServiceProvider extends LaravelServiceProvider {
         $grant->setRefreshTokenTTL(Passport::refreshTokensExpireIn());
         
         return $grant;
-    }
-
-    public function provides()
-    {
-        return [ AuthorizationServer::class ];
     }
     
 }
