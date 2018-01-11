@@ -25,6 +25,8 @@ class ServiceProvider extends LaravelServiceProvider {
         
     public function boot()
     {
+        $config = $this->app->make('config')->get('app');
+
         // get key paths
         list($publicKey, $privateKey) = [
             Passport::keyPath('oauth-public.key'),
@@ -35,6 +37,11 @@ class ServiceProvider extends LaravelServiceProvider {
         // thereby, passport is not ready to be used yet,
         // as it will just exit with an exception.
         if (! (file_exists($publicKey) || file_exists($privateKey)) ) {
+            return;
+        }
+
+        // exit early, as the encryption key is not set yet.
+        if (empty($config['key'])) {
             return;
         }
 
