@@ -25,29 +25,11 @@ class ServiceProvider extends LaravelServiceProvider {
         
     public function boot()
     {
-        $config = $this->app->make('config')->get('app');
-
-        // get key paths
-        list($publicKey, $privateKey) = [
-            Passport::keyPath('oauth-public.key'),
-            Passport::keyPath('oauth-private.key'),
-        ];
-
-        // exit early, as the keys are not set yet.
-        // thereby, passport is not ready to be used yet,
-        // as it will just exit with an exception.
-        if (! (file_exists($publicKey) || file_exists($privateKey)) ) {
-            return;
-        }
-
-        // exit early, as the encryption key is not set yet.
-        if (empty($config['key'])) {
-            return;
-        }
-
-        $this->app->make(AuthorizationServer::class)->enableGrantType(
-            $this->makeFacebookGrant(), Passport::tokensExpireIn()
-        );
+        $this->app->resolving(AuthorizationServer::class, function ($server, $app) {
+            $server->enableGrantType(
+                $this->makeFacebookGrant(), Passport::tokensExpireIn()
+            );
+        });
     }
     
     protected function makeFacebookGrant()
